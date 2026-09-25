@@ -1,0 +1,5 @@
+network,data_access_0_5,historical_reproducibility_0_5,opportunity_diversity_0_5,execution_access_0_5,prototype_cost_0_5,competition_accessibility_0_5,implementation_simplicity_0_5,evidence_confidence_0_5,total_0_40,decision,principal_uncertainty,evidence_file
+Solana,3,2,4,3,4,1,2,3,22,HOLD; run SOL-HR-001,Exact historical pool pre-state and current opportunity survival are unproven,network-screening/solana.md
+Base,5,4,4,3,4,2,3,4,29,GO; run BASE-HR-001,The strongest empirical sample predates Flashblocks and Denim may change the regime again,network-screening/base.md
+Robinhood Chain,4,4,4,3,4,2,3,3,27,CONDITIONAL GO; read-only probe only,Public executable depth and ordinary-taker RFQ access are unverified,network-screening/robinhood-chain.md
+Ethereum,4,4,4,4,3,1,3,4,27,CONDITIONAL GO; run ETH-R1 only,Private-flow blind spots and intense generic-strategy competition,network-screening/ethereum.md

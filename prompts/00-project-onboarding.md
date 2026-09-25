@@ -9,18 +9,18 @@ Your first task is to understand the project—not to start coding immediately.
 Read these files in order, if present:
 
 1. `README.md`
-2. `docs/PROJECT_BRIEF.md`
-3. `docs/RESEARCH_PLAN.md`
-4. `docs/METHODOLOGY.md`
-5. `docs/FINDINGS.md`
-6. `docs/EVIDENCE_LEDGER.md`
-7. `docs/SOURCES.md`
-8. `docs/NETWORK_SCORECARD.md` or `data/NETWORK_SCORECARD.csv`
-9. `schemas/TRANSACTION_SCHEMA.md`
-10. `docs/architecture.md` and `docs/security.md`
-11. relevant files under `docs/networks/`, then `src/`, `tests/`, and `data/samples/`
+2. `AGENTS.md`
+3. `docs/project-context.md`
+4. `docs/research-methodology.md`
+5. `research/2026-09-25/recommendation.md`
+6. `research/2026-09-25/cross-network-scorecard.md`
+7. `research/2026-09-25/independent-review.md`
+8. `research/2026-09-25/preregistration.md`
+9. the relevant report under `research/2026-09-25/network-screening/` and its source register under `research/2026-09-25/evidence/`
+10. `docs/architecture.md`, `docs/security.md`, and `schemas/opportunity.schema.json`
+11. `docs/roadmap.md`, `docs/decision-log.md`, then relevant files under `src/`, `tests/`, and `data/samples/`
 
-If a named file is absent, say so. Do not infer its contents. Also read `CONTRIBUTING.md`, `AGENTS.md`, and local instructions if they exist.
+If a named file is absent, say so. Do not infer its contents. Also read `CONTRIBUTING.md` and local instructions if they exist.
 
 ## Evidence discipline
 
@@ -45,4 +45,4 @@ Return a concise onboarding memo with:
 8. the next three tasks ranked by information value per unit of cost;
 9. one recommended task for this session, including acceptance criteria.
 
-Do not modify code until I approve the task. If you discover a factual correction, propose exact updates to `docs/EVIDENCE_LEDGER.md`, `docs/FINDINGS.md`, and `docs/SOURCES.md` (or their actual equivalents) rather than silently changing the narrative.
+Do not modify code until I approve the task. If you discover a factual correction, propose exact dated updates to the relevant report and source register rather than silently changing the narrative.

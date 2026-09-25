@@ -33,6 +33,15 @@ If you are a person:
 
 If you are using ChatGPT or another coding/research agent, copy the repository URL into a new conversation and use [`prompts/00-project-onboarding.md`](prompts/00-project-onboarding.md).
 
+## Latest research sprint
+
+The 2026-09-25 multi-agent network screen is complete. It recommends Base and Robinhood Chain for the next bounded data-collection phase, keeps Ethereum as a narrow MEV-Share side experiment, and gates broader Solana work on raw historical reconstruction.
+
+- [Sprint recommendation](research/2026-09-25/recommendation.md)
+- [Cross-network scorecard](research/2026-09-25/cross-network-scorecard.md)
+- [Independent review](research/2026-09-25/independent-review.md)
+- [Stage-2 preregistration](research/2026-09-25/preregistration.md)
+
 ## Repository map
 
 ```text

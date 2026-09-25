@@ -17,6 +17,7 @@ These prompts are hand-off tools for opening the repository in a fresh ChatGPT o
 - [`03-strategy-design.md`](03-strategy-design.md) — turn supported findings into a falsifiable strategy specification.
 - [`04-implementation-session.md`](04-implementation-session.md) — implement one scoped change while preserving reproducibility and safety.
 - [`05-research-review.md`](05-research-review.md) — audit claims, calculations, citations, and readiness to proceed.
+- [`06-stage2-kickoff.md`](06-stage2-kickoff.md) — continue from the completed 2026-09-25 sprint without redoing desk research.
 
 ## Shared rules
 

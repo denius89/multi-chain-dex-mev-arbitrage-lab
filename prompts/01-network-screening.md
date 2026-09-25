@@ -4,7 +4,7 @@ Using this repository: `<REPOSITORY_URL>`, conduct or extend the comparative scr
 
 ## Read first
 
-Read `README.md`, `docs/PROJECT_BRIEF.md`, `docs/RESEARCH_PLAN.md`, `docs/METHODOLOGY.md`, `docs/EVIDENCE_LEDGER.md`, `docs/FINDINGS.md`, `docs/SOURCES.md`, the current network scorecard, and every relevant file under `docs/networks/`. Read the schema before proposing data collection.
+Read `README.md`, `AGENTS.md`, `docs/project-context.md`, `docs/research-methodology.md`, the latest dated folder under `research/`, the relevant standing files under `docs/networks/`, and `schemas/opportunity.schema.json` before proposing data collection.
 
 ## Research rules
 
@@ -36,4 +36,4 @@ Produce:
 5. a bounded data-collection plan and stop conditions;
 6. a list of facts that could not be verified.
 
-When repository write access is available, update the network files, scorecard, `docs/EVIDENCE_LEDGER.md`, `docs/FINDINGS.md`, and `docs/SOURCES.md`. Do not overwrite earlier evidence: append or supersede it with a dated explanation. Run available validation/tests and summarize changed files. If write access is unavailable, return a patch-ready change list.
+When repository write access is available, create or update a dated sprint folder with network reports, source registers, a common-rubric scorecard and an independent review record. Do not overwrite earlier evidence: append or supersede it with a dated explanation. Run available validation/tests and summarize changed files. If write access is unavailable, return a patch-ready change list.

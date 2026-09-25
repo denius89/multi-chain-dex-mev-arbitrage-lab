@@ -40,4 +40,4 @@ Return:
 7. exact proposed repository changes;
 8. decision recommendation: proceed, gather more evidence, revise thesis, or stop.
 
-Do not invent substitute data when evidence is missing. Do not upgrade hypotheses to facts. When write access exists, correct only clear factual/documentation errors and append a dated review entry to `docs/EVIDENCE_LEDGER.md` or the repository's review log. Preserve disputed claims with status and rationale rather than silently deleting them. If write access is unavailable, return patch-ready corrections.
+Do not invent substitute data when evidence is missing. Do not upgrade hypotheses to facts. When write access exists, correct only clear factual/documentation errors and append a dated review entry under the relevant `research/` sprint folder. Preserve disputed claims with status and rationale rather than silently deleting them. If write access is unavailable, return patch-ready corrections.

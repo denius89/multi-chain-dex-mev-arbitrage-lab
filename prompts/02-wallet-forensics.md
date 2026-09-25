@@ -44,4 +44,4 @@ Return:
 8. exact reproduction commands or queries;
 9. recommended next sample and stop condition.
 
-Never infer future or stable profit from the sample. When write access exists, add normalized non-sensitive samples, update `docs/EVIDENCE_LEDGER.md`, `docs/FINDINGS.md`, and `docs/SOURCES.md`, and add regression fixtures/tests for decoded transactions. Otherwise provide patch-ready updates.
+Never infer future or stable profit from the sample. When write access exists, add normalized non-sensitive samples, a dated evidence record and source register entry, plus regression fixtures/tests for decoded transactions. Otherwise provide patch-ready updates.
