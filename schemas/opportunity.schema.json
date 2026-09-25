@@ -1,0 +1,343 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/denius89/multi-chain-dex-mev-arbitrage-lab/blob/main/schemas/opportunity.schema.json",
+  "title": "Normalized DEX/MEV Opportunity",
+  "description": "A chain-agnostic record for observed, reconstructed, paper-traded, or live DEX/MEV opportunities on Solana and EVM-compatible networks.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "opportunity_id",
+    "network",
+    "observation_mode",
+    "strategy_type",
+    "status",
+    "observed_at",
+    "location",
+    "route",
+    "financials",
+    "provenance",
+    "confidence"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "opportunity_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable project-defined identifier; do not use a mutable row number."
+    },
+    "network": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["family", "name", "chain_id"],
+      "properties": {
+        "family": { "enum": ["solana", "evm"] },
+        "name": { "type": "string", "minLength": 1 },
+        "chain_id": {
+          "oneOf": [
+            { "type": "integer", "minimum": 0 },
+            { "type": "string", "minLength": 1 }
+          ]
+        },
+        "cluster": { "type": ["string", "null"] }
+      }
+    },
+    "observation_mode": {
+      "enum": ["historical", "live_observed", "paper", "live"]
+    },
+    "strategy_type": {
+      "enum": [
+        "cyclic_arbitrage",
+        "cross_venue_arbitrage",
+        "backrun",
+        "liquidation",
+        "oracle_venue_divergence",
+        "rfq_amm_arbitrage",
+        "orderbook_amm_arbitrage",
+        "inventory_rebalance",
+        "other",
+        "unknown"
+      ]
+    },
+    "strategy_label": { "type": ["string", "null"] },
+    "status": {
+      "enum": [
+        "detected",
+        "simulated_profitable",
+        "simulated_unprofitable",
+        "submitted",
+        "landed",
+        "reverted",
+        "expired",
+        "rejected",
+        "unknown"
+      ]
+    },
+    "observed_at": { "type": "string", "format": "date-time" },
+    "detected_at": { "type": ["string", "null"], "format": "date-time" },
+    "submitted_at": { "type": ["string", "null"], "format": "date-time" },
+    "landed_at": { "type": ["string", "null"], "format": "date-time" },
+    "location": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["block_or_slot"],
+      "properties": {
+        "block_or_slot": { "type": "integer", "minimum": 0 },
+        "block_hash": { "type": ["string", "null"] },
+        "transaction_hash": { "type": ["string", "null"] },
+        "transaction_index": { "type": ["integer", "null"], "minimum": 0 },
+        "bundle_id": { "type": ["string", "null"] },
+        "state_reference": { "type": ["string", "null"] },
+        "finality": {
+          "type": ["string", "null"],
+          "enum": ["processed", "confirmed", "finalized", "safe", "pending", "unknown", null]
+        }
+      }
+    },
+    "actor": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "address": { "type": ["string", "null"] },
+        "entity_id": { "type": ["string", "null"] },
+        "attribution_method": { "type": ["string", "null"] },
+        "attribution_confidence": { "$ref": "#/$defs/confidenceLevel" }
+      }
+    },
+    "trigger": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "type": ["string", "null"] },
+        "transaction_hash": { "type": ["string", "null"] },
+        "block_or_slot": { "type": ["integer", "null"], "minimum": 0 },
+        "observed_at": { "type": ["string", "null"], "format": "date-time" },
+        "description": { "type": ["string", "null"] }
+      }
+    },
+    "route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["input_asset", "output_asset", "legs"],
+      "properties": {
+        "input_asset": { "$ref": "#/$defs/assetAmount" },
+        "output_asset": { "$ref": "#/$defs/assetAmount" },
+        "atomic": { "type": ["boolean", "null"] },
+        "flash_liquidity_used": { "type": ["boolean", "null"] },
+        "legs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/routeLeg" }
+        }
+      }
+    },
+    "financials": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["quote_currency", "gross_pnl", "execution_cost", "net_pnl"],
+      "properties": {
+        "quote_currency": { "type": "string", "minLength": 1 },
+        "input_value": { "$ref": "#/$defs/decimalOrNull" },
+        "output_value": { "$ref": "#/$defs/decimalOrNull" },
+        "gross_pnl": { "$ref": "#/$defs/decimal" },
+        "execution_cost": { "$ref": "#/$defs/decimal" },
+        "net_pnl": { "$ref": "#/$defs/decimal" },
+        "fully_loaded_pnl": { "$ref": "#/$defs/decimalOrNull" },
+        "costs": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "base_fee": { "$ref": "#/$defs/decimalOrNull" },
+            "priority_fee": { "$ref": "#/$defs/decimalOrNull" },
+            "relay_or_validator_tip": { "$ref": "#/$defs/decimalOrNull" },
+            "protocol_fee": { "$ref": "#/$defs/decimalOrNull" },
+            "flash_loan_fee": { "$ref": "#/$defs/decimalOrNull" },
+            "failure_cost_allocated": { "$ref": "#/$defs/decimalOrNull" },
+            "hedge_or_settlement_cost": { "$ref": "#/$defs/decimalOrNull" },
+            "other": { "$ref": "#/$defs/decimalOrNull" }
+          }
+        },
+        "price_policy": { "type": ["string", "null"] },
+        "valuation_timestamp": { "type": ["string", "null"], "format": "date-time" },
+        "reconciliation_error": { "$ref": "#/$defs/decimalOrNull" }
+      }
+    },
+    "latency": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "source_to_detection_ms": { "type": ["number", "null"], "minimum": 0 },
+        "decode_ms": { "type": ["number", "null"], "minimum": 0 },
+        "calculation_ms": { "type": ["number", "null"], "minimum": 0 },
+        "simulation_ms": { "type": ["number", "null"], "minimum": 0 },
+        "submit_ms": { "type": ["number", "null"], "minimum": 0 },
+        "end_to_end_ms": { "type": ["number", "null"], "minimum": 0 },
+        "opportunity_lifetime_ms": { "type": ["number", "null"], "minimum": 0 },
+        "decay": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["delay_ms", "net_pnl"],
+            "properties": {
+              "delay_ms": { "type": "integer", "minimum": 0 },
+              "net_pnl": { "$ref": "#/$defs/decimal" },
+              "profitable": { "type": ["boolean", "null"] },
+              "state_reference": { "type": ["string", "null"] }
+            }
+          }
+        }
+      }
+    },
+    "competition": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "competitor_count": { "type": ["integer", "null"], "minimum": 0 },
+        "winner_address": { "type": ["string", "null"] },
+        "winner_entity_id": { "type": ["string", "null"] },
+        "position_in_block": { "type": ["integer", "null"], "minimum": 0 },
+        "related_attempt_ids": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        }
+      }
+    },
+    "failure": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "type": ["string", "null"],
+          "enum": [
+            "revert",
+            "expired",
+            "stale_state",
+            "slippage",
+            "insufficient_fee_or_tip",
+            "simulation_error",
+            "data_gap",
+            "infrastructure_error",
+            "risk_rejection",
+            "unknown",
+            null
+          ]
+        },
+        "reason": { "type": ["string", "null"] },
+        "cost": { "$ref": "#/$defs/decimalOrNull" },
+        "cost_observable": { "type": ["boolean", "null"] }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_type", "collected_at", "collector_version"],
+      "properties": {
+        "source_type": {
+          "enum": ["rpc", "archive_rpc", "geyser", "sequencer_feed", "indexer", "explorer", "dataset", "manual", "other"]
+        },
+        "provider": { "type": ["string", "null"] },
+        "endpoint_class": { "type": ["string", "null"] },
+        "source_reference": { "type": ["string", "null"] },
+        "collected_at": { "type": "string", "format": "date-time" },
+        "raw_data_hash": { "type": ["string", "null"] },
+        "repository_commit": { "type": ["string", "null"] },
+        "collector_version": { "type": "string", "minLength": 1 },
+        "decoder_version": { "type": ["string", "null"] },
+        "simulator_version": { "type": ["string", "null"] },
+        "configuration_hash": { "type": ["string", "null"] },
+        "data_complete": { "type": ["boolean", "null"] },
+        "known_gaps": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "confidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "basis"],
+      "properties": {
+        "level": { "$ref": "#/$defs/confidenceLevel" },
+        "basis": { "type": "string", "minLength": 1 },
+        "would_raise_confidence": { "type": ["string", "null"] }
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    }
+  },
+  "$defs": {
+    "decimal": {
+      "description": "Base-10 numeric value serialized as a string to avoid floating-point loss.",
+      "type": "string",
+      "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+    },
+    "decimalOrNull": {
+      "oneOf": [
+        { "$ref": "#/$defs/decimal" },
+        { "type": "null" }
+      ]
+    },
+    "confidenceLevel": {
+      "type": ["string", "null"],
+      "enum": ["high", "medium", "low", null]
+    },
+    "assetAmount": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["asset_id", "raw_amount", "decimals"],
+      "properties": {
+        "asset_id": { "type": "string", "minLength": 1 },
+        "symbol": { "type": ["string", "null"] },
+        "raw_amount": {
+          "type": "string",
+          "pattern": "^-?[0-9]+$"
+        },
+        "decimals": { "type": "integer", "minimum": 0, "maximum": 255 },
+        "normalized_amount": { "$ref": "#/$defs/decimalOrNull" },
+        "value_in_quote_currency": { "$ref": "#/$defs/decimalOrNull" }
+      }
+    },
+    "routeLeg": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["index", "action", "venue", "asset_in", "asset_out"],
+      "properties": {
+        "index": { "type": "integer", "minimum": 0 },
+        "action": {
+          "enum": ["swap", "borrow", "repay", "liquidate", "mint", "burn", "transfer", "wrap", "unwrap", "other"]
+        },
+        "venue": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name"],
+          "properties": {
+            "name": { "type": "string", "minLength": 1 },
+            "venue_type": {
+              "type": ["string", "null"],
+              "enum": ["amm", "clmm", "dlmm", "orderbook", "rfq", "lending", "bridge", "other", null]
+            },
+            "program_or_contract": { "type": ["string", "null"] },
+            "pool_or_market": { "type": ["string", "null"] }
+          }
+        },
+        "asset_in": { "$ref": "#/$defs/assetAmount" },
+        "asset_out": { "$ref": "#/$defs/assetAmount" },
+        "fee_amount": { "$ref": "#/$defs/decimalOrNull" },
+        "fee_asset_id": { "type": ["string", "null"] },
+        "instruction_or_log_index": { "type": ["integer", "null"], "minimum": 0 }
+      }
+    }
+  }
+}

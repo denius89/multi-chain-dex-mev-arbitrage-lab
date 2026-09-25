@@ -1,0 +1,38 @@
+name: Research finding
+description: Propose or document a reproducible research finding
+title: "[Research]: "
+labels: ["research"]
+body:
+  - type: textarea
+    id: claim
+    attributes:
+      label: Claim
+      description: State one falsifiable claim.
+    validations:
+      required: true
+  - type: dropdown
+    id: network
+    attributes:
+      label: Network
+      options: [Solana, Base, Robinhood Chain, Ethereum, Cross-chain]
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Primary evidence
+      description: Transactions, blocks/slots, contracts, primary sources, and retrieval dates.
+    validations:
+      required: true
+  - type: textarea
+    id: method
+    attributes:
+      label: Reproduction method
+    validations:
+      required: true
+  - type: textarea
+    id: limitations
+    attributes:
+      label: Limitations and alternative explanations
+    validations:
+      required: true

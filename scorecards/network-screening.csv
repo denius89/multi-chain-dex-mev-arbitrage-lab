@@ -1,0 +1,5 @@
+network,period_start,period_end,venues_covered,candidate_opportunities,confirmed_opportunities,median_net_profit_usd,p90_net_profit_usd,max_net_profit_usd,median_lifetime_ms,top3_profit_share,failed_cost_usd,prototype_monthly_cost_usd,data_access_score,execution_access_score,implementation_score,evidence_confidence,status,notes
+Solana,,,,,,,,,,,,,,,,,,pending,
+Base,,,,,,,,,,,,,,,,,,pending,
+Robinhood Chain,,,,,,,,,,,,,,,,,,pending,
+Ethereum,,,,,,,,,,,,,,,,,,pending,
